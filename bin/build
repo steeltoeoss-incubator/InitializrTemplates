@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+set -e
+
+prog=$(basename $0)
+base_dir=$(cd $(dirname $0)/.. && pwd)
+
+usage () {
+  echo "USAGE"
+  echo "     $prog [-h]"
+  echo
+  echo "OPTIONS"
+  echo "     -h      print this message"
+  echo
+  echo "DESCRIPTION"
+  echo "     Build the project's IZR template bundles."
+}
+
+while getopts ":h" opt ; do
+  case $opt in
+    h)
+      usage
+      exit
+      ;;
+    \?)
+      echo "invalid option -$OPTARG; run with -h for help" 2>&1
+      exit 1
+      ;;
+    :)
+      echo "option -$OPTARG requires an argument; run with -h for help" 2>&1
+      exit 1
+      ;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [[ $# > 0 ]]; then
+  echo "too many args; run with -h for help" 2>&1
+  exit 1
+fi
+
+projects=$(find $base_dir -type d -name '[A-z]*' -depth 1 | sort)
+for project in $projects; do
+  [ -d $project/.IZR ] || continue
+  cd $project
+  izr=$base_dir/$(basename $project.izr)
+  echo "creating $izr"
+  rm -f $izr
+  zip -q -r $izr .[A-z]* *
+  cd - >/dev/null
+done

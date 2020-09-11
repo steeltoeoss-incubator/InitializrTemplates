@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+set -e
+
+prog=$(basename $0)
+base_dir=$(cd $(dirname $0)/.. && pwd)
+publish_dir=$base_dir/publish
+
+usage () {
+  echo "USAGE"
+  echo "     $prog [-h]"
+  echo
+  echo "OPTIONS"
+  echo "     -h      print this message"
+  echo
+  echo "DESCRIPTION"
+  echo "     Publish the project's built IZR template bundles."
+}
+
+while getopts ":h" opt ; do
+  case $opt in
+    h)
+      usage
+      exit
+      ;;
+    \?)
+      echo "invalid option -$OPTARG; run with -h for help" 2>&1
+      exit 1
+      ;;
+    :)
+      echo "option -$OPTARG requires an argument; run with -h for help" 2>&1
+      exit 1
+      ;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [[ $# > 0 ]]; then
+  echo "too many args; run with -h for help" 2>&1
+  exit 1
+fi
+
+izr_files=$(find $base_dir -type f -name '*.izr' -depth 1 | sort)
+if [ -z "$izr_files" ]; then
+  echo "no IZR files to publish; did you run 'build'?" 2>&1
+  exit 1
+fi
+mkdir -p $publish_dir
+for izr_file in $izr_files; do
+  echo "publishing $(basename $izr_file)"
+  cp $izr_file $publish_dir
+done

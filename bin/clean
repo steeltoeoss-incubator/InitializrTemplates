@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+set -e
+
+prog=$(basename $0)
+base_dir=$(cd $(dirname $0)/.. && pwd)
+force=false
+
+usage () {
+  echo "USAGE"
+  echo "     $prog [-fh]"
+  echo
+  echo "OPTIONS"
+  echo "     -f      forcefully clean (do not prompt to remove files)"
+  echo "     -h      print this message"
+  echo
+  echo "DESCRIPTION"
+  echo "     Clean the project."
+}
+
+while getopts ":fh" opt ; do
+  case $opt in
+    f)
+      force=true
+      ;;
+    h)
+      usage
+      exit
+      ;;
+    \?)
+      echo "invalid option -$OPTARG; run with -h for help" 2>&1
+      exit 1
+      ;;
+    :)
+      echo "option -$OPTARG requires an argument; run with -h for help" 2>&1
+      exit 1
+      ;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [[ $# > 0 ]]; then
+  echo "too many args; run with -h for help" 2>&1
+  exit 1
+fi
+
+$force && rm_args="-f" || rm_args="-i"
+echo "cleaning publish"
+rm -r $rm_args $base_dir/publish || true
+echo "cleaning IZR files"
+rm $rm_args $base_dir/*.izr || true
