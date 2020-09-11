@@ -40,7 +40,7 @@ if [[ $# > 0 ]]; then
   exit 1
 fi
 
-izr_files=$(find $base_dir -type f -name '*.izr' -depth 1 | sort)
+izr_files=$(ls "$base_dir"/*.izr 2>/dev/null || true)
 if [ -z "$izr_files" ]; then
   echo "no IZR files to publish; did you run 'build'?" 2>&1
   exit 1

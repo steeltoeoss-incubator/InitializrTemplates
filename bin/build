@@ -39,11 +39,11 @@ if [[ $# > 0 ]]; then
   exit 1
 fi
 
-projects=$(find "$base_dir" -type d -name \[A-z\]\* -depth 1 | sort)
-for project in $projects; do
-  [ -d "$project"/.IZR ] || continue
-  cd "$project"
-  izr="$base_dir"/$(basename $project.izr)
+izr_dirs=$(find "$base_dir" -type d -name '.IZR' | sort)
+for izr_dir in $izr_dirs; do
+  project_dir=$(dirname $izr_dir)
+  cd "$project_dir"
+  izr="$base_dir"/$(basename "$project_dir".izr)
   echo "creating $izr"
   rm -f "$izr"
   zip -q -r "$izr" .[A-z]* *
