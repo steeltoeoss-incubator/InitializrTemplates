@@ -1,0 +1,20 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: initializr-templates
+spec:
+  selector:
+    matchLabels:
+      app: initializr-templates
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: initializr-templates
+    spec:
+      containers:
+      - name: initializr-templates
+        image: initializr-templates
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
