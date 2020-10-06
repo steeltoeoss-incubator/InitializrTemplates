@@ -3,54 +3,54 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-{{#MongoDB}}
+{{#mongodb}}
 using Steeltoe.Connector.MongoDb;
-{{/MongoDB}}
-{{#MySqlOrMySqlEFCore}}
+{{/mongodb}}
+{{#mysql-or-mysql-efcore}}
 using Steeltoe.Connector.MySql;
-{{/MySqlOrMySqlEFCore}}
-{{#MySqlEFCore}}
+{{/mysql-or-mysql-efcore}}
+{{#mysql-efcore}}
 using Steeltoe.Connector.MySql.EFCore;
-{{/MySqlEFCore}}
-{{#OAuthConnector}}
+{{/mysql-efcore}}
+{{#oauth}}
 using Steeltoe.Connector.OAuth;
-{{/OAuthConnector}}
-{{#Postgres}}
+{{/oauth}}
+{{#postgresql}}
 using Steeltoe.Connector.PostgreSql;
-{{/Postgres}}
-{{#PostgresEFCore}}
+{{/postgresql}}
+{{#postgresql-efcore}}
 using Steeltoe.Connector.PostgreSql.EFCore;
-{{/PostgresEFCore}}
-{{#RabbitMQ}}
+{{/postgresql-efcore}}
+{{#amqp}}
 using Steeltoe.Connector.RabbitMQ;
-{{/RabbitMQ}}
-{{#Redis}}
+{{/amqp}}
+{{#redis}}
 using Steeltoe.Connector.Redis;
-{{/Redis}}
-{{#SQLServer}}
+{{/redis}}
+{{#sqlserver}}
 using Steeltoe.Connector.SqlServer.EFCore;
-{{/SQLServer}}
-{{#Discovery}}
+{{/sqlserver}}
+{{#eureka-client}}
 using Steeltoe.Discovery.Client;
-{{/Discovery}}
-{{#Actuators}}
+{{/eureka-client}}
+{{#actuator}}
 using Steeltoe.Management.CloudFoundry;
-{{/Actuators}}
+{{/actuator}}
 {{#RequiresHttps}}
 using Microsoft.AspNetCore.HttpsPolicy;
 {{/RequiresHttps}}
 {{#Auth}}
 using Microsoft.AspNetCore.Authentication;
 {{/Auth}}
-{{#OrganizationalAuth}}
+{{#oauth}}
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
-{{/OrganizationalAuth}}
+{{/oauth}}
 {{#IndividualB2CAuth}}
 using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 {{/IndividualB2CAuth}}
-{{#CircuitBreaker}}
+{{#circuit-breaker}}
 using Steeltoe.CircuitBreaker.Hystrix;
-{{/CircuitBreaker}}
+{{/circuit-breaker}}
 
 namespace {{Namespace}}
 {
@@ -66,30 +66,30 @@ namespace {{Namespace}}
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-{{#OrganizationalAuth}}
+{{#oauth}}
             services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
                 .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
-{{/OrganizationalAuth}}
+{{/oauth}}
 {{#IndividualB2CAuth}}
             services.AddAuthentication(AzureADB2CDefaults.BearerAuthenticationScheme)
                 .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
 {{/IndividualB2CAuth}}
-{{#MySql}}
+{{#mysql}}
             services.AddMySqlConnection(Configuration);
-{{/MySql}}
-{{#Actuators}}
+{{/mysql}}
+{{#actuator}}
             services.AddCloudFoundryActuators(Configuration);
-{{/Actuators}}
-{{#Discovery}}
+{{/actuator}}
+{{#eureka-client}}
             services.AddDiscoveryClient(Configuration);
-{{/ Discovery}}
-{{#Postgres}}
+{{/eureka-client}}
+{{#postgresql}}
             services.AddPostgresConnection(Configuration);
-{{/Postgres}}
-{{#RabbitMQ}}
+{{/postgresql}}
+{{#amqp}}
             services.AddRabbitMQConnection(Configuration);
-{{/RabbitMQ}}
-{{#Redis}}
+{{/amqp}}
+{{#redis}}
             // Add the Redis distributed cache.
             // We are using the Steeltoe Redis Connector to pickup the CloudFoundry
             // Redis Service binding and use it to configure the underlying RedisCache
@@ -97,17 +97,17 @@ namespace {{Namespace}}
             services.AddDistributedRedisCache(Configuration);
             // This works like the above, but adds a IConnectionMultiplexer to the container
             // services.AddRedisConnectionMultiplexer(Configuration);
-{{/Redis}}
-{{#MongoDB}}
+{{/redis}}
+{{#mongodb}}
             services.AddMongoClient(Configuration);
-{{/MongoDB}}
-{{#OAuthConnector}}
+{{/mongodb}}
+{{#oauth}}
             services.AddOAuthServiceOptions(Configuration);
-{{/OAuthConnector}}
-{{#PostgresEFCore}}
+{{/oauth}}
+{{#postgresql-efcore}}
             // Add Context and use Postgres as provider ... provider will be configured from VCAP_ info
             // services.AddDbContext<MyDbContext>(options => options.UseNpgsql(Configuration));
-{{/PostgresEFCore}}
+{{/postgresql-efcore}}
             services.AddControllers();
         }
 
@@ -131,9 +131,9 @@ namespace {{Namespace}}
             app.UseAuthentication();
 {{/Auth}}
 
-{{#Discovery}}
+{{#eureka-client}}
             app.UseDiscoveryClient();
-{{/Discovery}}
+{{/eureka-client}}
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {

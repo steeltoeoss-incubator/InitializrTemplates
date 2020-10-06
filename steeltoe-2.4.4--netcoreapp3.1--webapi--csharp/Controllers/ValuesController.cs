@@ -7,38 +7,38 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 {{/Auth}}
 using Microsoft.AspNetCore.Mvc;
-{{#SQLServer}}
+{{#sqlserver}}
 using Microsoft.Data.SqlClient;
 using System.Data;
-{{/SQLServer}}
-{{#MySql}}
+{{/sqlserver}}
+{{#mysql}}
 using MySql.Data.MySqlClient;
 using System.Data;
-{{/MySql}}
-{{#Postgres}}
+{{/mysql}}
+{{#postgresql}}
 using Npgsql;
 using System.Data;
-{{/Postgres}}
-{{#MongoDB}}
+{{/postgresql}}
+{{#mongodb}}
 using MongoDB.Driver;
 using System.Data;
-{{/MongoDB}}
-{{#Redis}}
+{{/mongodb}}
+{{#redis}}
 using Microsoft.Extensions.Caching.Distributed;
-{{/Redis}}
-{{#RabbitMQ}}
+{{/redis}}
+{{#amqp}}
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 using System.Threading;
-{{/RabbitMQ}}
-{{#AnyConfigSource}}
+{{/amqp}}
+{{#any-config-source}}
 using Microsoft.Extensions.Configuration;
-{{/AnyConfigSource}}
-{{#CloudFoundry}}
+{{/any-config-source}}
+{{#cloud-foundry}}
 using Steeltoe.Extensions.Configuration.CloudFoundry;
 using Microsoft.Extensions.Options;
-{{/CloudFoundry}}
+{{/cloud-foundry}}
 namespace {{Namespace}}.Controllers
 {
     {{#Auth}}
@@ -48,8 +48,8 @@ namespace {{Namespace}}.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-{{^MoreThanOneValuesControllerWithArgs }}
-        {{#SQLServer}}
+{{^more-than-one-values-controller-with-args }}
+        {{#sqlserver}}
         private readonly SqlConnection _dbConnection;
         public ValuesController([FromServices] SqlConnection dbConnection)
         {
@@ -72,8 +72,8 @@ namespace {{Namespace}}.Controllers
             }
             return tables;
         }
-        {{/SQLServer}}
-        {{#MySql}}
+        {{/sqlserver}}
+        {{#mysql}}
         private readonly MySqlConnection _dbConnection;
         public ValuesController([FromServices] MySqlConnection dbConnection)
         {
@@ -96,8 +96,8 @@ namespace {{Namespace}}.Controllers
             }
             return tables;
         }
-        {{/MySql}}
-        {{#Postgres}}
+        {{/mysql}}
+        {{#postgresql}}
         private readonly NpgsqlConnection _dbConnection;
         public ValuesController([FromServices] NpgsqlConnection dbConnection)
         {
@@ -120,8 +120,8 @@ namespace {{Namespace}}.Controllers
             }
             return tables;
         }
-        {{/Postgres}}
-        {{#MongoDB}}
+        {{/postgresql}}
+        {{#mongodb}}
         private readonly IMongoClient _mongoClient;
         private readonly MongoUrl _mongoUrl;
         public ValuesController(IMongoClient mongoClient, MongoUrl mongoUrl)
@@ -136,8 +136,8 @@ namespace {{Namespace}}.Controllers
         {
             return _mongoClient.ListDatabaseNames().ToList();
         }
-        {{/MongoDB}}
-        {{#Redis}}
+        {{/mongodb}}
+        {{#redis}}
         private readonly IDistributedCache _cache;
         public ValuesController(IDistributedCache cache)
         {
@@ -154,8 +154,8 @@ namespace {{Namespace}}.Controllers
             string myval2 = await _cache.GetStringAsync("MyValue2");
             return new string[]{ myval1, myval2};
         }
-        {{/Redis}}
-        {{#RabbitMQ}}
+        {{/redis}}
+        {{#amqp}}
         private readonly ILogger _logger;
         private readonly ConnectionFactory _factory;
         private const string queueName = "my-queue";
@@ -201,8 +201,8 @@ namespace {{Namespace}}.Controllers
             }
             return "Wrote 5 message to the info log. Have a look!";
         }
-        {{/RabbitMQ}}
-        {{#ConfigServer}}
+        {{/amqp}}
+        {{#config-server}}
         private readonly IConfiguration _config;
         public ValuesController(IConfiguration config)
         {
@@ -217,8 +217,8 @@ namespace {{Namespace}}.Controllers
             var val2 = _config["Value2"];
             return new string[] { val1, val2 };
         }
-        {{/ConfigServer}}
-        {{#PlaceholderConfig}}
+        {{/config-server}}
+        {{#placeholder}}
         private readonly IConfiguration _config;
         public ValuesController(IConfiguration config)
         {
@@ -233,8 +233,8 @@ namespace {{Namespace}}.Controllers
             var val3 = _config["ResolvedPlaceholderFromJson"];
             return new string[] { val1, val2, val3 };
         }
-        {{/PlaceholderConfig}}
-        {{#RandomValueConfig}}
+        {{/placeholder}}
+        {{#random-value}}
         private readonly IConfiguration _config;
         public ValuesController(IConfiguration config)
         {
@@ -250,8 +250,8 @@ namespace {{Namespace}}.Controllers
 
             return new string[] { val1, val2, val3 };
         }
-        {{/RandomValueConfig}}
-        {{#CircuitBreaker}}
+        {{/random-value}}
+        {{#circuit-breaker}}
          // GET api/values
         [HttpGet]
         public async Task<IEnumerable<string>> Get()
@@ -261,8 +261,8 @@ namespace {{Namespace}}.Controllers
             string a = await cb.ExecuteAsync();
             return new string[] { a };
         }
-        {{/CircuitBreaker}}
-        {{#CloudFoundry}}
+        {{/circuit-breaker}}
+        {{#cloud-foundry}}
         private readonly ILogger _logger;
         private CloudFoundryApplicationOptions _appOptions { get; set; }
         private CloudFoundryServicesOptions _serviceOptions { get; set; }
@@ -284,22 +284,22 @@ namespace {{Namespace}}.Controllers
                                                        .Credentials["xxxxxxx"].Value*/
             return new string[] { appInstance, appName };
         }
-        {{/CloudFoundry}}
-{{/MoreThanOneValuesControllerWithArgs}}
-{{#MoreThanOneValuesControllerWithArgs}}
+        {{/cloud-foundry}}
+{{/more-than-one-values-controller-with-args}}
+{{#more-than-one-values-controller-with-args}}
         [HttpGet]
 public ActionResult<string> Get()
 {
     return "value";
 }
-{{/MoreThanOneValuesControllerWithArgs}}
-        {{^ValuesControllerWithArgs}}
+{{/more-than-one-values-controller-with-args}}
+        {{^values-controller-with-args}}
         [HttpGet]
         public ActionResult<string> Get()
         {
             return "value";
         }
-        {{/ValuesControllerWithArgs}}
+        {{/values-controller-with-args}}
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)

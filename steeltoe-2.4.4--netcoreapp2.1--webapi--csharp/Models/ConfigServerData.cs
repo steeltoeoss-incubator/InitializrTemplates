@@ -9,7 +9,7 @@ namespace {{Namespace}}
     /// An object used with the DI Options mechanism for exposing the data retrieved
     /// from the Spring Cloud Config Server
     /// </summary>
-    public class ConfigServerData
+    public class config-serverData
     {
         public string Bar { get; set; }
         public string Foo { get; set; }

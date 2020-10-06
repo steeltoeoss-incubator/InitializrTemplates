@@ -1,7 +1,7 @@
 {
   "Params": [
     {
-      "Name": "Actuators",
+      "Name": "actuator",
       "DefaultValue": false,
       "Description": "Steeltoe: Add management endpoints for your application"
     },
@@ -11,7 +11,7 @@
       "Description": "Add Authentication"
     },
     {
-      "Name": "CircuitBreaker",
+      "Name": "circuit-breaker",
       "DefaultValue": false,
       "Description": "Steeltoe: Add Circuit Breakers",
       "FriendlyName": "Circuit Breakers"
@@ -28,7 +28,7 @@
       "Description": "Steeltoe: Add Discovery Client"
     },
     {
-      "Name": "DynamicLogger",
+      "Name": "dynamic-logger",
       "DefaultValue": false,
       "Description": "Steeltoe: Add Dynamic Logger"
     },
@@ -38,28 +38,28 @@
       "Description": "Steeltoe: Add MongoDB connectors"
     },
     {
-      "Name": "MySql",
+      "Name": "mysql",
       "DefaultValue": "false",
       "Description": "Steeltoe: Add MySql connectors"
     },
     {
-      "Name": "MySqlEFCore",
+      "Name": "mysql-efcore",
       "DefaultValue": false,
       "Description": "Steeltoe: Add MySQL EFCore connectors",
       "friendlyName": "MySql EFCore"
     },
     {
-      "Name": "OAuthConnector",
+      "Name": "oauth",
       "DefaultValue": false,
       "Description": "Steeltoe: Add OAuth connectors"
     },
     {
-      "Name": "Postgres",
+      "Name": "postgresql",
       "DefaultValue": false,
       "Description": "Steeltoe: Add Postgres connectors"
     },
     {
-      "Name": "PostgresEFCore",
+      "Name": "postgresql-efcore",
       "DefaultValue": false,
       "Description": "Steeltoe: Add Postgres EFCore connectors",
       "friendlyName": "Postgres EFCore"
@@ -75,25 +75,25 @@
       "Description": "Steeltoe: Add Redis connectors"
     },
     {
-      "Name": "SQLServer",
+      "Name": "sqlserver",
       "DefaultValue": false,
       "Description": "Steeltoe: Add Microsoft SQL Server connectors",
       "friendlyName": "SQL Server"
     },
     {
-      "Name": "ConfigServer",
+      "Name": "config-server",
       "DefaultValue": false,
-      "Description": "Steeltoe: Add ConfigServer Configuration Source",
+      "Description": "Steeltoe: Add config-server Configuration Source",
       "friendlyName": "Config Server"
     },
     {
-      "Name": "PlaceholderConfig",
+      "Name": "placeholder",
       "DefaultValue": false,
       "Description": "Steeltoe: Add Placeholder Configuration Source",
       "friendlyName": "Placeholder Configuration Source"
     },
     {
-      "Name": "RandomValueConfig",
+      "Name": "random-value",
       "DefaultValue": false,
       "Description": "Steeltoe: Add RandomValue Configuration Source",
       "friendlyName": "RandomValue Configuration Source"
@@ -112,63 +112,63 @@
   ],
   "CalculatedParams": [
     {
-      "Name": "ActuatorsOrCloudFoundry",
-      "Expression": "Actuators,CloudFoundry",
+      "Name": "actuator-or-cloud-foundry",
+      "Expression": "actuator,cloud-foundry",
       "ExpressionType": "Any"
     },
     {
-      "Name": "AnyEFCore",
-      "Expression": "PostgresEFCore,MySqlEFCore",
+      "Name": "any-efcore",
+      "Expression": "postgresql-efcore,mysql-efcore",
       "ExpressionType": "Any"
     },
     {
-      "Name": "MySqlOrMySqlEFCore",
-      "Expression": "MySql,MySqlEFCore",
+      "Name": "mysql-or-mysql-efcore",
+      "Expression": "mysql,mysql-efcore",
       "ExpressionType": "Any"
     },
     {
-      "Name": "ActuatorsOrDynamicLogger",
-      "Expression": "Actuators,DynamicLogger",
+      "Name": "actuator-or-dynamic-logger",
+      "Expression": "actuator,dynamic-logger",
       "ExpressionType": "Any"
     },
     {
-      "Name": "ValuesControllerWithArgs",
-      "Expression": "SQLServer,MySql,Postgres,MongoDB,RabbitMQ,Redis,ConfigServer,PlaceholderConfig,RandomValueConfig,CircuitBreaker,CloudFoundry",
+      "Name": "values-controller-with-args",
+      "Expression": "sqlserver,mysql,postgresql,mongodb,amqp,redis,config-server,placeholder,random-value,circuit-breaker,cloud-foundry",
       "ExpressionType": "Any"
     },
     {
-      "Name": "MoreThanOneValuesControllerWithArgs",
-      "Expression": "SQLServer,MySql,Postgres,MongoDB,RabbitMQ,Redis,ConfigServer,PlaceholderConfig,RandomValueConfig,CircuitBreaker,CloudFoundry",
+      "Name": "more-than-one-values-controller-with-args",
+      "Expression": "sqlserver,mysql,postgresql,mongodb,amqp,redis,config-server,placeholder,random-value,circuit-breaker,cloud-foundry",
       "ExpressionType": "MoreThanOne"
     },
     {
-      "Name": "AnySqlData",
-      "Expression": "SQLServer,MySql,Postgres,MongoDB",
+      "Name": "any-sql",
+      "Expression": "sqlserver,mysql,postgresql,MongoDB",
       "ExpressionType": "Any"
     },
     {
-      "Name": "AnyConnector",
-      "Expression": "MySql,Postgres,SQLServer,Redis,MongoDB,RabbitMQ,OAuthConnector",
+      "Name": "any-connector",
+      "Expression": "mysql,postgresql,sqlserver,redis,mongodb,amqp,oauth",
       "ExpressionType": "Any"
     },
     {
-      "Name": "AnyConfigSource",
-      "Expression": "ConfigServer,PlaceholderConfig,RandomValueConfig",
+      "Name": "any-config-source",
+      "Expression": "config-server,placeholder,random-value",
       "ExpressionType": "Any"
     },
     {
-      "Name": "AspNetCoreVersion",
+      "Name": "asp-dotnet-core-version",
       "Expression": "TargetFrameworkVersion,netcoreapp2.1=2.1.1,default=False",
       "ExpressionType": "Case"
     }
   ],
   "ConditionalInclusions": [
     {
-      "Name": "AnyEFCore",
+      "Name": "any-efcore",
       "InclusionExpression": "Models/**"
     },
     {
-      "Name": "CircuitBreaker",
+      "Name": "circuit-breaker",
       "InclusionExpression": "MyCircuitBreakerCommand.cs"
     },
     {
@@ -200,22 +200,22 @@
       ]
     },
     {
-      "Name": "MySqlVersion",
+      "Name": "mysql-version",
       "DefaultValue": "8.0.16"
     },
 
     {
-      "Name": "NpgSqlVersion",
+      "Name": "npgsql-version",
       "DefaultValue": "4.0.4"
     },
 
     {
-      "Name": "MongoDBVersion",
+      "Name": "mongodb-version",
       "DefaultValue": "2.8.1"
     },
 
     {
-      "Name": "RabbitMQVersion",
+      "Name": "rabbitmq-version,",
       "DefaultValue": "5.1.0"
     }
   ]

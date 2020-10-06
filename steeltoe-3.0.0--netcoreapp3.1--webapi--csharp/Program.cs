@@ -1,26 +1,26 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-{{#AzureSpringCloud}}
+{{#azure-spring-cloud}}
 using Microsoft.Azure.SpringCloud.Client;
-{{/AzureSpringCloud}}
-{{#ActuatorsOrDynamicLogger}}
+{{/azure-spring-cloud}}
+{{#actuator-or-dynamic-logger}}
 using Steeltoe.Extensions.Logging.DynamicSerilog;
-{{/ActuatorsOrDynamicLogger}}
-{{#CloudFoundry}}
+{{/actuator-or-dynamic-logger}}
+{{#cloud-foundry}}
 using Steeltoe.Common.Hosting;
-{{^ConfigServer}}
+{{^config-server}}
 using Steeltoe.Extensions.Configuration.CloudFoundry;
-{{/ConfigServer}}
-{{/CloudFoundry}}
-{{#ConfigServer}}
-using Steeltoe.Extensions.Configuration.ConfigServer;
-{{/ConfigServer}}
-{{#PlaceholderConfig}}
+{{/config-server}}
+{{/cloud-foundry}}
+{{#config-server}}
+using Steeltoe.Extensions.Configuration.config-server;
+{{/config-server}}
+{{#placeholder}}
 using Steeltoe.Extensions.Configuration.Placeholder;
-{{/PlaceholderConfig}}
-{{#RandomValueConfig}}
+{{/placeholder}}
+{{#random-value}}
 using Steeltoe.Extensions.Configuration.RandomValue;
-{{/ RandomValueConfig}}
+{{/ random-value}}
 
 namespace {{Namespace}}
 {
@@ -30,9 +30,9 @@ namespace {{Namespace}}
         {
             CreateWebHostBuilder(args)
             .Build()
-            {{#AnyEFCore}}
+            {{#any-efcore}}
             .InitializeDbContexts()
-            {{/AnyEFCore}}
+            {{/any-efcore}}
             .Run();
         }
 
@@ -40,27 +40,27 @@ namespace {{Namespace}}
         {
             var builder = WebHost.CreateDefaultBuilder(args)
                 .UseDefaultServiceProvider(configure => configure.ValidateScopes = false)
-{{#CloudFoundry}}
+{{#cloud-foundry}}
                 .UseCloudHosting() //Enable listening on a Env provided port
-{{^ConfigServer}}
+{{^config-server}}
                 .AddCloudFoundryConfiguration() //Add cloudfoundry environment variables as a configuration source
-{{/ConfigServer}}
-{{/CloudFoundry}}
-{{#ConfigServer}}
-                .AddConfigServer()
-{{/ConfigServer}}
-{{#PlaceholderConfig}}
+{{/config-server}}
+{{/cloud-foundry}}
+{{#config-server}}
+                .Addconfig-server()
+{{/config-server}}
+{{#placeholder}}
                 .AddPlaceholderResolver()
-{{/PlaceholderConfig}}
-{{#RandomValueConfig}}
+{{/placeholder}}
+{{#random-value}}
                 .ConfigureAppConfiguration((b) => b.AddRandomValueSource())
-{{/RandomValueConfig}}
-{{#AzureSpringCloud}}
+{{/random-value}}
+{{#azure-spring-cloud}}
                 .UseAzureSpringCloudService()
-{{/AzureSpringCloud}}
-{{#ActuatorsOrDynamicLogger}}
+{{/azure-spring-cloud}}
+{{#actuator-or-dynamic-logger}}
                 .ConfigureLogging((context, builder) => builder.AddSerilogDynamicConsole())
-{{/ActuatorsOrDynamicLogger}}
+{{/actuator-or-dynamic-logger}}
                 .UseStartup<Startup>();
             return builder;
         }
