@@ -12,89 +12,89 @@
     </PropertyGroup>
 
   <ItemGroup >
-    {{#OrganizationalAuth}}
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="{{AspNetCoreVersion}}" />
-    {{/OrganizationalAuth}}
+    {{#oauth}}
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="{{asp-dotnet-core-version}}" />
+    {{/oauth}}
     {{#IndividualB2CAuth}}
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureADB2C.UI" Version="{{AspNetCoreVersion}}}" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureADB2C.UI" Version="{{asp-dotnet-core-version}}}" />
     {{/IndividualB2CAuth}}
     {{#RequiresHttps}}
-    <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="{{AspNetCoreVersion}}" />
+    <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="{{asp-dotnet-core-version}}" />
     {{/RequiresHttps}}
-    {{#AnyEFCore}}
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="{{AspNetCoreVersion}}" />
-    {{/AnyEFCore}}
-    {{#MongoDB}}
-    <PackageReference Include="MongoDB.Driver" Version="{{MongoDBVersion}}" />
-    {{/MongoDB}}
-    {{#MySql}}
-    <PackageReference Include="MySql.Data" Version="{{MySqlVersion}}" />
-    {{/MySql}}
-    {{#Postgres}}
-    <PackageReference Include="Npgsql" Version="{{NpgSqlVersion}}" />
-    {{/Postgres}}
-    {{#CircuitBreaker}}
+    {{#any-efcore}}
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="{{asp-dotnet-core-version}}" />
+    {{/any-efcore}}
+    {{#mongodb}}
+    <PackageReference Include="MongoDB.Driver" Version="{{mongodb-version}}" />
+    {{/mongodb}}
+    {{#mysql}}
+    <PackageReference Include="MySql.Data" Version="{{mysql-version}}" />
+    {{/mysql}}
+    {{#postgresql}}
+    <PackageReference Include="Npgsql" Version="{{npgsql-version}}" />
+    {{/postgresql}}
+    {{#circuit-breaker}}
     <PackageReference Include="Steeltoe.CircuitBreaker.HystrixCore" Version="{{SteeltoeVersion}}" />
-    {{/CircuitBreaker}}
-    {{#CloudFoundry}}
+    {{/circuit-breaker}}
+    {{#cloud-foundry}}
     <PackageReference Include="Steeltoe.Common.Hosting"  Version="{{SteeltoeVersion}}" />
-    {{/CloudFoundry}}
-    {{#AnyConnector}}
+    {{/cloud-foundry}}
+    {{#any-connector}}
     <PackageReference Include="Steeltoe.Connector.ConnectorCore"  Version="{{SteeltoeVersion}}"/>
     <PackageReference Include="Steeltoe.Connector.CloudFoundry"  Version="{{SteeltoeVersion}}"/>
-    {{/AnyConnector}}
-    {{#AnyEFCore}}
+    {{/any-connector}}
+    {{#any-efcore}}
     <PackageReference Include="Steeltoe.Connector.EFCore"  Version="{{SteeltoeVersion}}" />
-    {{/AnyEFCore}}
-    {{#SQLServer}}
+    {{/any-efcore}}
+    {{#sqlserver}}
     <PackageReference Include="Steeltoe.Connector.EFCore"  Version="{{SteeltoeVersion}}" />
-    {{/SQLServer}}
-    {{#Discovery}}
+    {{/sqlserver}}
+    {{#eureka-client}}
     <PackageReference Include="Steeltoe.Discovery.ClientCore" Version="{{SteeltoeVersion}}"/>
-    {{/Discovery}}
-    {{#CloudFoundry}}
+    {{/eureka-client}}
+    {{#cloud-foundry}}
     <PackageReference Include="Steeltoe.Extensions.Configuration.CloudFoundryCore"  Version="{{SteeltoeVersion}}" />
-    {{/CloudFoundry}}
-    {{#PlaceholderConfig}}
+    {{/cloud-foundry}}
+    {{#placeholder}}
     <PackageReference Include="Steeltoe.Extensions.Configuration.PlaceholderCore" Version="{{SteeltoeVersion}}" />
-    {{/PlaceholderConfig}}
-    {{#ActuatorsOrCloudFoundry}}
+    {{/placeholder}}
+    {{#actuator-or-cloud-foundry}}
     <PackageReference Include="Steeltoe.Extensions.Logging.DynamicSerilogCore" Version="{{SteeltoeVersion}}" />
-    {{/ActuatorsOrCloudFoundry}}
-    {{#DynamicLogger}}
+    {{/actuator-or-cloud-foundry}}
+    {{#dynamic-logger}}
     <PackageReference Include="Steeltoe.Extensions.Logging.DynamicSerilogCore" Version="{{SteeltoeVersion}}" />
-    {{/DynamicLogger}}
-    {{#ActuatorsOrCloudFoundry}}
+    {{/dynamic-logger}}
+    {{#actuator-or-cloud-foundry}}
     <PackageReference Include="Steeltoe.Management.CloudFoundryCore" Version="{{SteeltoeVersion}}" />
-    {{/ActuatorsOrCloudFoundry}}
-    {{#ConfigServer}}
-    <PackageReference Include="Steeltoe.Extensions.Configuration.ConfigServerCore" Version="{{SteeltoeVersion}}" />
-    {{/ConfigServer}}
-    {{#RandomValueConfig}}
+    {{/actuator-or-cloud-foundry}}
+    {{#config-server}}
+    <PackageReference Include="Steeltoe.Extensions.Configuration.config-serverCore" Version="{{SteeltoeVersion}}" />
+    {{/config-server}}
+    {{#random-value}}
     <PackageReference Include="Steeltoe.Extensions.Configuration.RandomValueBase" Version="{{SteeltoeVersion}}" />
-    {{/RandomValueConfig}}
-    {{#AzureSpringCloud}}
+    {{/random-value}}
+    {{#azure-spring-cloud}}
     <PackageReference Include="Microsoft.Azure.SpringCloud.Client" Version="1.0.0-alpha.1" />
-    {{/AzureSpringCloud}}
+    {{/azure-spring-cloud}}
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-    {{#Redis}}
+    {{#redis}}
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="3.1.0" />
-    {{/Redis}}
-    {{#PostgresEFCore}}
+    {{/redis}}
+    {{#postgresql-efcore}}
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"  Version="3.1.0" />
-    {{/PostgresEFCore}}
-    {{#RabbitMQ}}
-    <PackageReference Include="RabbitMQ.Client"  Version="{{RabbitMQVersion}}" />
-    {{/RabbitMQ}}
+    {{/postgresql-efcore}}
+    {{#amqp}}
+    <PackageReference Include="RabbitMQ.Client"  Version="{{rabbitmq-version,}}" />
+    {{/amqp}}
   </ItemGroup>
-  {{#CircuitBreaker}}
+  {{#circuit-breaker}}
   <ItemGroup Condition="'$(BUILD)' == ''">
     <PackageReference Include="Steeltoe.CircuitBreaker.Hystrix.MetricsStreamCore" Version="{{SteeltoeVersion}}" />
-    <PackageReference Include="RabbitMQ.Client" Version="{{RabbitMQVersion}}" />
+    <PackageReference Include="RabbitMQ.Client" Version="{{rabbitmq-version,}}" />
   </ItemGroup>
   <ItemGroup Condition="'$(BUILD)' == 'LOCAL'">
     <PackageReference Include="Steeltoe.CircuitBreaker.Hystrix.MetricsEventsCore" Version="{{SteeltoeVersion}}" />
     <PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
   </ItemGroup>
-  {{/CircuitBreaker}}
+  {{/circuit-breaker}}
 </Project>

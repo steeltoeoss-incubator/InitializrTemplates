@@ -8,27 +8,27 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-{{#AzureSpringCloud}}
+{{#azure-spring-cloud}}
 using Microsoft.Azure.SpringCloud.Client;
-{{/AzureSpringCloud}}
-{{#ActuatorsOrDynamicLogger}}
+{{/azure-spring-cloud}}
+{{#actuator-or-dynamic-logger}}
 using Steeltoe.Extensions.Logging;
-{{/ActuatorsOrDynamicLogger}}
-{{#CloudFoundry}}
-{{^ConfigServer}}
+{{/actuator-or-dynamic-logger}}
+{{#cloud-foundry}}
+{{^config-server}}
 using Steeltoe.Extensions.Configuration;
 using Steeltoe.Extensions.Configuration.CloudFoundry;
-{{/ConfigServer}}
-{{/CloudFoundry}}
-{{#ConfigServer}}
-using Steeltoe.Extensions.Configuration.ConfigServer;
-{{/ConfigServer}}
-{{#PlaceholderConfig}}
+{{/config-server}}
+{{/cloud-foundry}}
+{{#config-server}}
+using Steeltoe.Extensions.Configuration.config-server;
+{{/config-server}}
+{{#placeholder}}
 using Steeltoe.Extensions.Configuration.PlaceholderCore;
-{{/PlaceholderConfig}}
-{{#RandomValueConfig}}
+{{/placeholder}}
+{{#random-value}}
 using Steeltoe.Extensions.Configuration.RandomValue;
-{{/ RandomValueConfig}}
+{{/ random-value}}
 namespace {{Namespace}}
 {
     public class Program
@@ -37,9 +37,9 @@ namespace {{Namespace}}
         {
             CreateWebHostBuilder(args)
             .Build()
-            {{#AnyEFCore}}
+            {{#any-efcore}}
             .InitializeDbContexts()
-            {{/AnyEFCore}}
+            {{/any-efcore}}
             .Run();
 
         }
@@ -48,32 +48,32 @@ namespace {{Namespace}}
         {
             var builder = WebHost.CreateDefaultBuilder(args)
                 .UseDefaultServiceProvider(configure => configure.ValidateScopes = false)
-                {{#CloudFoundry}}
+                {{#cloud-foundry}}
                 .UseCloudFoundryHosting() //Enable listening on a Env provided port
-                {{^ConfigServer}}
+                {{^config-server}}
                 .AddCloudFoundry() //Add cloudfoundry environment variables as a configuration source
-                {{/ConfigServer}}
-                {{/CloudFoundry}}
-                {{#ConfigServer}}
-                .AddConfigServer()
-                {{/ConfigServer}}
-                {{#PlaceholderConfig}}
+                {{/config-server}}
+                {{/cloud-foundry}}
+                {{#config-server}}
+                .Addconfig-server()
+                {{/config-server}}
+                {{#placeholder}}
                 .AddPlaceholderResolver()
-                {{/PlaceholderConfig}}
-                {{#RandomValueConfig}}
+                {{/placeholder}}
+                {{#random-value}}
                 .ConfigureAppConfiguration((b) => b.AddRandomValueSource())
-                {{/RandomValueConfig}}
-                {{#AzureSpringCloud}}
+                {{/random-value}}
+                {{#azure-spring-cloud}}
                 .UseAzureSpringCloudService()
-                {{/AzureSpringCloud}}
+                {{/azure-spring-cloud}}
                 .UseStartup<Startup>();
-{{#ActuatorsOrDynamicLogger}}
+{{#actuator-or-dynamic-logger}}
             builder.ConfigureLogging((hostingContext, loggingBuilder) =>
             {
                 loggingBuilder.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
                 loggingBuilder.AddDynamicConsole();
             });
-{{/ActuatorsOrDynamicLogger}}
+{{/actuator-or-dynamic-logger}}
             return builder;
         }
     }

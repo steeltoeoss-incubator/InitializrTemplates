@@ -8,49 +8,49 @@ manifest:
 - path: app.config
 - path: appsettings.json
 - path: Dockerfile
-  dependencies: Dockerfile
+  dependencies: docker
 - path: MyCircuitBreakerCommand.cs
-  dependencies: CircuitBreaker
+  dependencies: circuit-breaker
 - path: Program.cs
 - path: ReplaceMe.csproj
   rename: "{{Name}}.csproj"
 - path: Startup.cs
 - path: Controllers/ValuesController.cs
 - path: Models/ErrorViewModel.cs
-  dependencies: AnyEFCore
+  dependencies: any-efcore
 - path: Models/InitializeContext.cs
-  dependencies: AnyEFCore
+  dependencies: any-efcore
 - path: Models/SampleData.cs
-  dependencies: AnyEFCore
+  dependencies: any-efcore
 - path: Models/TestContext.cs
-  dependencies: AnyEFCore
+  dependencies: any-efcore
 - path: Properties/launchSettings.json
 parameters:
-  - name: AspNetCoreVersion
+  - name: asp-dotnet-core-version
     value: 3.1.0
-  - name: MongoDBVersion
+  - name: mongodb-version
     value: 2.8.1
-  - name: MySqlVersion
+  - name: mysql-version
     value: 8.0.16
-  - name: NpgSqlVersion
+  - name: npgsql-version
     value: 4.0.4
-  - name: RabbitMQVersion
+  - name: rabbitmq-version,
     value: 5.1.0
-  - name: ActuatorsOrCloudFoundry
-    expression: Actuators || CloudFoundry
-  - name: ActuatorsOrDynamicLogger
-    expression: Actuators || DynamicLogger
-  - name: AnyConfigSource
-    expression: ConfigServer || PlaceholderConfig || RandomValueConfig
-  - name: AnyConnector
-    expression:  MongoDB || MySql || OAuthConnector || Postgres || RabbitMQ || Redis || SQLServer
-  - name: AnyEFCore
-    expression: MySqlEFCore || PostgresEFCore
-  - name: AnySqlData
-    expression: MySql || Postgres || MongoDB || SQLServer
-  - name: MoreThanOneValuesControllerWithArgs
-    expression: moreThan1(SQLServer, MySql, Postgres, MongoDB, RabbitMQ, Redis, ConfigServer, PlaceholderConfig, RandomValueConfig, CircuitBreaker, CloudFoundry) > 1
-  - name: MySqlOrMySqlEFCore
-    expression: MySql || MySqlEFCore
-  - name: ValuesControllerWithArgs
-    expression: SQLServer || MySql || Postgres || MongoDB || RabbitMQ || Redis || ConfigServer || PlaceholderConfig || RandomValueConfig || CircuitBreaker || CloudFoundrymanifest
+  - name: actuator-or-cloud-foundry
+    expression: actuator || cloud-foundry
+  - name: actuator-or-dynamic-logger
+    expression: actuator || dynamic-logger
+  - name: any-config-source
+    expression: config-server || placeholder || random-value
+  - name: any-connector
+    expression:  mongodb || mysql || oauth || postgresql || amqp || redis || sqlserver
+  - name: any-sql
+    expression: mysql || postgresql || mongodb || sqlserver
+  - name: any-efcore
+    expression: mysql-efcore || postgresql-efCore
+  - name: mysql-or-mysql-efcore
+    expression: mysql || mysql-efcore
+  - name: more-than-one-values-controller-with-args
+    expression: count(sqlserver, mysql, postgresql, mongodb, amqp, redis, config-server, placeholder, random-value, circuit-breaker, cloud-foundry) > 1
+  - name: values-controller-with-args
+    expression: sqlserver || mysql || postgresql || mongodb || amqp || redis || config-server || placeholder || random-value || circuit-breaker || cloud-foundry
