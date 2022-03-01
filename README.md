@@ -1,3 +1,5 @@
+# InitializrTemplates is no longer actively maintained by VMware, Inc.
+
 # Steeltoe InitializrTemplates
 
 Steeltoe Initializr project templates
